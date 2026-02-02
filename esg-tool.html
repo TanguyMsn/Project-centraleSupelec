@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>ESG Investment Pre-Screening Tool</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+
+<body>
+
+<header class="top-header">
+    <div class="header-left">
+        <a href="index.html" style="text-decoration: none; color: inherit;">
+            <span class="name">Tanguy Masini</span>
+        </a>
+    </div>
+    <nav class="header-nav">
+        <a href="index.html">Accueil</a>
+        <a href="academique.html">Parcours académique</a>
+        <a href="experience.html">Expériences & Projet professionnel</a>
+        <a href="msc-fit.html">Pourquoi ce MSc</a>
+        <a href="esg-tool.html"class="active">Démonstrateur ESG</a>
+    </nav>
+</header>
+
+<main class="page-content">
+    <section class="experience-card reveal">
+        <div class="experience-card-inner">
+            <h1>Simulateur d'Investissement & de Transition Climatique</h1>
+<p class="tool-intro">
+    L'investissement de demain se joue à l'intersection de la performance financière et de la trajectoire carbone.</strong>
+</p><p class="tool-description">
+    Ce démonstrateur simule la "Boîte Noire" d'un arbitrage en Real Assets : il analyse comment l'investissement ESG (CAPEX) impacte la valorisation finale (Exit Yield) et la conformité réglementaire (Décret Tertiaire / CRREM). 
+    <br><br>
+    🚀 <strong>Le défi :</strong> Saurez-vous équilibrer votre TRI avec les exigences de la transition climatique ? 
+    Modifiez les variables ci-dessous pour tester vos scénarios d'investissement, visualisez l'analyse de risque sur le graphique radar, puis <strong>téléchargez votre rapport d'arbitrage personnalisé au format PDF</strong> pour finaliser votre simulation.
+    
+    <br><br>
+    <small style="display: block; border-left: 3px solid #166534; padding-left: 10px; color: #666;">
+        <strong>Note :</strong> Les valeurs pré-remplies simulent un actif de bureaux 'Prime' au sein du QCA parisien (Quartier Central des Affaires), reflétant les conditions de marché actuelles.
+    </small>
+</p>
+
+<section class="disclaimer-section" style="margin-top: 40px; padding: 20px; border-top: 1px solid #eee;">
+    <p style="font-size: 0.85rem; color: #9ca3af; line-height: 1.5; text-align: justify;">
+        <strong>Avertissement :</strong> Cet outil est un modèle de simulation pédagogique développé pour illustrer des concepts de gestion d'actifs immobiliers. 
+        Il ne constitue en aucun cas un conseil en investissement, une expertise immobilière certifiée ou une garantie de performance. 
+        Toute décision réelle d'investissement nécessite une due diligence approfondie et l'intervention de professionnels qualifiés.
+    </p>
+</section>
+    <section class="tool-section">
+        <h2><i class="icon">💰</i> Finance</h2>
+        <label>Prix d'acquisition (€)<input type="number" id="price" value="50000000"></label>
+        <label>CAPEX Total (€)<input type="number" id="capexTotal" value="6000000"></label>
+        
+        <label>
+            Yield à l'acquisition (%)
+            <span class="tooltip">ⓘ<span class="tooltiptext">Taux de rendement initial. Le modèle compare ce taux à l'Exit Yield pour mesurer la création de valeur (Yield Compression).</span></span>
+            <input type="number" id="yieldAcq" step="0.1" value="3.8">
+        </label>
+
+        <label>
+            Exit Yield (%)
+            <span class="tooltip">ⓘ<span class="tooltiptext">Intègre la "Green Premium" (surprime de 5-15%) ou le "Brown Discount" (décote de 10-30% selon JLL/MSCI). Un actif non conforme subit une dévalorisation à la revente.</span></span>
+            <input type="number" id="exitYield" step="0.1" value="3.6">
+        </label>
+
+        <label>Taux de Rendement Interne Cible (%)<input type="number" id="irrTarget" value="6.5"></label>
+
+        <label>
+            Taux de Rendement Interne Projet Estimé (%)
+            <span class="tooltip">ⓘ<span class="tooltiptext">Score = 0.4 x (TRI Projet / TRI Cible). La rentabilité est ajustée selon le risque de sortie et l'effort d'investissement consenti.</span></span>
+            <input type="number" id="irrProject" value="6.8">
+        </label>
+
+        <label>Durée détention (années)<input type="number" id="duration" value="7"></label>
+
+        <label>
+            Taux de vacance (%)
+            <span class="tooltip">ⓘ<span class="tooltiptext">Le modèle simule une "vacance structurelle" plus élevée si le score ESG est faible, reflétant l'exigence des locataires corporate (Flight-to-Quality).</span></span>
+            <input type="number" id="vacancy" value="4">
+        </label>
+    </section>
+
+    <section class="tool-section">
+        <h2><i class="icon">🌿</i> ESG / Carbone</h2>
+        <label>
+            Dont CAPEX ESG (€)
+            <span class="tooltip">ⓘ<span class="tooltiptext">Vecteur de compression du Taux de Sortie. Le "Gold Standard" est estimé à 15% du prix d'acquisition pour une rénovation lourde performante.</span></span>
+            <input type="number" id="capexESG" value="4000000">
+        </label>
+
+        <label>
+            Réduction Carbone visée (%)
+            <span class="tooltip">ⓘ<span class="tooltiptext">Distance à la conformité (Gap-to-Compliance). Comparé aux objectifs du Décret Tertiaire (-40% en 2030, -60% en 2050).</span></span>
+            <input type="number" id="carbonTarget" value="40">
+        </label>
+
+        <label>
+            Horizon Réglementaire (ans)
+            <span class="tooltip">ⓘ<span class="tooltiptext">Référentiel CRREM / Décret Tertiaire. Si l'horizon d'échouage (Stranding Point) est inférieur à la durée de détention, le score chute drastiquement.</span></span>
+            <input type="number" id="regulatoryHorizon" value="12">
+        </label>
+    </section>
+
+    <section class="tool-section">
+        <h2><i class="icon">⚠️</i> Risques</h2>
+        <label>
+            Complexité Technique (1-5)
+            <span class="tooltip">ⓘ<span class="tooltiptext">Sanctionne la difficulté d'exécution. Une complexité de 5/5 génère une pénalité de 20 points sur le score global.</span></span>
+            <input type="number" id="techComplexity" min="1" max="5" value="2">
+        </label>
+
+        <label>
+            Faisabilité Opérationnelle (1-5)
+            <span class="tooltip">ⓘ<span class="tooltiptext">Mesure la capacité à délivrer le plan d'affaires. Une faisabilité de 1/5 (faible) engendre une pénalité de 20 points.</span></span>
+            <input type="number" id="opFeasibility" min="1" max="5" value="5">
+        </label>
+    </section>
+</div>
+
+            <button class="tool-button" id="calcBtn" onclick="calculate()">Lancer l'Analyse</button>
+
+            <section class="tool-results">
+                <h2>Dashboard d'Arbitrage Stratégique</h2>
+                <div class="results-grid">
+                    <div class="result-item"><span>Finance Score</span><strong id="financeScore">-</strong></div>
+                    <div class="result-item"><span>ESG Score</span><strong id="esgScore">-</strong></div>
+                    <div class="result-item"><span>Pénalité Risque</span><strong id="riskScore">-</strong></div>
+                    <div class="result-item global"><span>SCORE GLOBAL</span><strong id="globalScore">-</strong></div>
+                </div>
+                <div class="verdict-box">
+                    <p id="verdict">En attente de simulation...</p>
+                
+                </div>
+                            <button class="tool-button" onclick="generatePDF()" style="background: #444; margin-top: 10px;">Générer le Rapport PDF</button>
+
+                <div class="chart-container" style="position: relative; height:300px; width:100%; margin-top: 20px;">
+    <canvas id="radarChart"></canvas>
+</div>
+            </section>
+        </div>
+    </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="js/esg-tool.js"></script>
+<footer class="main-footer">
+    <div class="footer-container">
+        <div class="footer-info">
+            <h3>Tanguy Masini</h3>
+            <p>Étudiant en Finance & Fund Manager intern Real Assets.</p>
+            <p class="tagline">Allier l'expertise financière à la culture d'ingénieur.</p>
+        </div>
+
+        <div class="footer-links">
+            <h4>Navigation</h4>
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="experience.html">Expériences</a></li>
+                <li><a href="esg-tool.html">Démonstrateur ESG</a></li>
+                <li><a href="assets/pdf/projet-motivation.pdf" target="_blank">Mon Projet (PDF)</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-contact">
+            <h4>Contact</h4>
+            <div class="social-icons">
+                <a href="https://linkedin.com/in/tanguy-masini-043a221bb/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="mailto:tanguy.masini@essca.eu"><i class="fa-solid fa-envelope"></i></a>
+            </div>
+            <p>Lyon / Paris, France</p>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>2026 — Développé avec soin par Tanguy Masini dans le cadre du Master of Science & Technology for Business Managers CentraleSupélec</p>
+    </div>
+</footer>
+</body>
+</html>
